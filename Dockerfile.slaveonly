@@ -9,6 +9,6 @@ RUN adduser root sudo
 USER root
 
 CMD sudo ptpd \
-    --master \
+    --slave \
     --interface eth0 \
     --domain 0

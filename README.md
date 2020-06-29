@@ -4,12 +4,10 @@ Scripts and/or docker containers for ptp synchronization across machines on the 
 
 # Laundry list
 * [x] add a simple docker file
-* [ ] add docker file for slave clock
-* [ ] enrich configs of the ptp service
-* [ ] move config from cli to config file
-* [ ] write the logs to file
-* [ ] mount a directory from host to write to log files to host instead of inside container
-
+* [x] add docker file for slave clock
+* [ ] use config files in docker files
+* [ ] make sure docker files work correctly with config files, and
+* [ ] write the logs to file instead of std
 
 
 ## License
