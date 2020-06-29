@@ -1,0 +1,21 @@
+FROM ubuntu
+
+RUN apt-get update && \
+    apt-get install -y sudo && \
+    apt-get install -y ptpd && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN adduser root sudo
+USER root
+
+CMD sudo ptpd \
+    --masteronly \
+    --interface enp0s31f6 \
+    --domain 0 \
+    --log-file ~/Desktop/ptp.log \
+    --statistics-file ~/Desktop/ptp.statistics \
+    --global:status_file ~/Desktop/ptp.status \
+    --global:quality_file ~/Desktop/ptp.quality
+
+# CMD sudo ptpd -c master.config
+

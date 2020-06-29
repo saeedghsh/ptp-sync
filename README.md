@@ -6,7 +6,7 @@ Scripts and/or docker containers for ptp synchronization across machines on the 
 * [x] add a simple docker file
 * [x] add docker file for slave clock
 * [ ] use config files in docker files
-* [ ] make sure docker files work correctly with config files, and
+* [ ] make sure docker files work correctly with config files
 * [ ] write the logs to file instead of std
 
 
