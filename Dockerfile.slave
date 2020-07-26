@@ -8,6 +8,8 @@ RUN apt-get update && \
 RUN adduser root sudo
 USER root
 
+# RUN sudo mkdir ./logs
+
 CMD sudo ptpd \
     --slaveonly \
     --interface enp0s31f6 \
@@ -17,4 +19,6 @@ CMD sudo ptpd \
     --global:status_file ~/Desktop/ptp.status \
     --global:quality_file ~/Desktop/ptp.quality
 
-# CMD sudo ptpd -c slave.config
+# COPY ./slave.config .
+# CMD sudo ptpd -c ./slave.config
+
