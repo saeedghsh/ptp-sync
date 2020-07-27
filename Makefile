@@ -8,26 +8,43 @@ clean:
 # build docker image from dockerfile
 .PHONY: build-master
 build-master:
-	sudo docker image build --tag ptpmasterclock:deamon --file Dockerfile.master .
+	docker image build --tag ptpmasterclock:daemon --file Dockerfile.master .
 
 # # run docker container from the image and (attach -it: interactive + tty)
 # # or, run docker container from the image detached and then attach
-# sudo docker container run --detach --name masterclock ptpmasterclock:deamon
-# sudo docker attach masterclock
+# docker container run --detach --name masterclock ptpmasterclock:daemon
+# docker attach masterclock
 .PHONY: run-master
 run-master:
-	sudo docker container run -it --name masterclock ptpmasterclock:deamon
+	docker container run -it --privileged --network host --name masterclock ptpmasterclock:daemon
+
+# stops running container, saves the state (sends sigterm, if not sends sigkill)
+.PHONY: stop-master
+stop-master:
+	docker stop masterclock
+
+# for previously stopped containers, not replace run
+.PHONY: start-master
+start-master:
+	docker start masterclock -i -a
 
 # kill running container; and remove container and image
 .PHONY: kill-rm-master
 kill-rm-master:
-	-sudo docker kill masterclock
-	-sudo docker container rm --force masterclock
-	sudo docker image rm --force ptpmasterclock:deamon
+	-docker kill masterclock
+	-docker container rm --force masterclock
+	docker image rm --force ptpmasterclock:daemon
 
 
-# sudo docker start masterclock -i -a
-# sudo docker exec -it
-# sudo docker stop
-# sudo docker image list
-# sudo docker container list
+# execute a command inside the container
+# docker exec -it masterclock ls # run ls inside the container
+# docker exec -it masterclock bash # run a bash inside the container, and attach (-it)
+
+# docker logs --follow masterclock
+# docker logs --follow --since -1h masterclock
+
+# docker image list
+# docker container list
+
+# docker ps
+# docker ps -a

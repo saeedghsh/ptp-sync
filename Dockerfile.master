@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:18.04
 
 RUN apt-get update && \
     apt-get install -y sudo && \
@@ -8,17 +8,30 @@ RUN apt-get update && \
 RUN adduser root sudo
 USER root
 
-# RUN sudo mkdir ./logs
+WORKDIR /root/
+RUN mkdir ./logs
+
+
+# does need to use sudo, even though this is already root / unless you --ignore-lock and --verbose
+# so, don't install sudo and just rely on being ROOt (which is the default), and use --ignore-lock and --verbose
+# but without sudo can't write to the files, so maybe keep?
 
 CMD sudo ptpd \
     --masteronly \
     --interface enp0s31f6 \
     --domain 0 \
-    --log-file ~/Desktop/ptp.log \
-    --statistics-file ~/Desktop/ptp.statistics \
-    --global:status_file ~/Desktop/ptp.status \
-    --global:quality_file ~/Desktop/ptp.quality
+    --log-file ./logs/ptp.log \
+    --statistics-file ./logs/ptp.statistics \
+    --global:status_file ./logs/ptp.status \
+    --global:quality_file ./logs/ptp.quality \
+    && tail --follow /dev/null
+
+# --foreground
 
 # COPY ./master.config .
 # CMD sudo ptpd -c ./master.config
 
+# docker container exits if the process is lunched in the backgroun, so used --forground in the configs
+# but running foreground will stop running to files
+# to fix this, use "service" app or
+# && tail --follow /dev/null

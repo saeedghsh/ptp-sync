@@ -2,6 +2,12 @@
 
 Scripts and/or docker containers for ptp synchronization across machines on the same network segments.
 
+use:
+ip link -> take interface and replace it in config
+docker build/run
+
+
+
 # Laundry list
 * [x] add a simple docker file
 * [x] add docker file for slave clock
